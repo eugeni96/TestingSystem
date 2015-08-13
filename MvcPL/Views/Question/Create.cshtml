@@ -1,0 +1,39 @@
+﻿@model MvcPL.Models.QuestionViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("/Scripts/default/customer-edit.js")
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Question", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        <label class="control-label col-sm-1">
+            Question Text
+        </label>
+        <div class="col-sm-4">
+            @Html.TextBoxFor(m => m.Text, new { @class = "form-control" })
+            @Html.ValidationMessage("Name")
+        </div>
+    </div>
+    <div id="OptionListWrapper">
+        <div class="btn btn-link" id="AddOption">Add Option</div>
+        @foreach (var option in Model.Options)
+        {
+            @Html.Partial("OptionItem", option)
+        }
+    </div>
+
+    <div class="col-sm-offset-1 col-sm-4">
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+    </div>
+}

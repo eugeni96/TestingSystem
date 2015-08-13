@@ -1,0 +1,40 @@
+﻿@model MvcPL.Models.CreateTestViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create test</h2>
+
+@using (Html.BeginForm("Create", "Test", FormMethod.Post, new {@class = "form-horizontal"}))
+{
+    @Html.Hidden("Id",Model.Test.Id)
+    
+    <div class="form-group">
+        <label class="control-label col-sm-1">
+            Test Name
+        </label>
+        <div class="col-sm-4">
+            @Html.TextBoxFor(m => m.Test.Name, new { @class = "form-control" })
+            @Html.ValidationMessage("Name")
+        </div>
+    </div>
+    <div id="QuestionListWrapper" class="col-sm-offset-1">
+        @for (int i = 0; i < Model.AllQuestions.Count(); i++)
+        {
+            <div class="QuestionWrapper">
+                @Html.HiddenFor(m => m.AllQuestions[i].Id)
+                @Html.CheckBoxFor(m => m.AllQuestions[i].IsPicked, new { @class = "checkbox, inline"})
+                @Html.LabelFor(m => m.AllQuestions[i].IsPicked, Model.AllQuestions[i].Text, new { @class = "control-label" })
+                @Html.HiddenFor(m => m.AllQuestions[i].Text)
+            </div>
+        }
+    </div>
+
+    <div class="col-sm-offset-1 col-sm-4">
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+    </div>
+}

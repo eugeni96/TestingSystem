@@ -1,0 +1,36 @@
+﻿@model ICollection<MvcPL.Models.TestViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>title</title>
+    </head>
+    <body>
+        
+        <table>
+            <tr>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Start test", "TestPass", "Test", new { id=item.Id }, null) 
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </body>
+</html>

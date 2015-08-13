@@ -1,0 +1,32 @@
+﻿@model IEnumerable<MvcPL.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<table>
+    
+
+    <tr>
+        <td>
+            <button class="btn, btn-link, btn-lg">
+                @Html.ActionLink("Test list", "TestList", "Test")
+            </button>
+        </td>
+        <td>
+            <button class="btn, btn-link, btn-lg">
+                @Html.ActionLink("Create Test", "Create", "Test")
+            </button>
+        </td>
+        <td>
+            <button class="btn, btn-link, btn-lg">
+                @Html.ActionLink("Add Question", "Create", "Question")
+            </button>
+        </td>
+    </tr>
+
+
+</table>

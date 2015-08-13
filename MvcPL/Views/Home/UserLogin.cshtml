@@ -1,0 +1,12 @@
+﻿@model BLL.Interface.Entities.UserEntity
+
+@if (Model != null)
+{
+    <li>@Html.ActionLink(Model.UserName, "Logout", "Login")</li>
+    <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
+}
+else
+{
+    <li>@Html.ActionLink("Login", "Index", "Login")</li>
+    <li>@Html.ActionLink("Registration", "Index", "Registration")</li>
+}

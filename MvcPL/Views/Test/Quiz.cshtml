@@ -1,0 +1,17 @@
+﻿@model MvcPL.Models.QuestionViewModel
+
+@using (Ajax.BeginForm("UpdateQuestion", "Test",
+        new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "quiz" },
+        new { @class = "form-horizontal, col-md-6, col-md-offset-2", @id = "quizForm" }))
+{
+    <fieldset>
+        <legend>@Model.Text</legend>
+        @Html.HiddenFor(m => m.Id, new { @Value = Model.Id })
+
+        @foreach (var choice in Model.Options)
+        {
+            @Html.Partial("OptionItem", choice)
+        }
+        <input type="submit" value="Answer" id="submitButton" />
+    </fieldset>
+}

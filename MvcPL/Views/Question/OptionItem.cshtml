@@ -1,0 +1,30 @@
+﻿@model KeyValuePair<string, MvcPL.Models.OptionViewModel>
+
+@{
+    ViewBag.Title = "OptionItem";
+}
+
+<div class="OptionWrapper">
+
+    <div class="btn btn-link remove-line">Delete</div>
+    
+    @Html.Hidden("Options[" + Model.Key + "].Id", Model.Value.Id)
+    @Html.Hidden("Options[" + Model.Key + "].QuestionId",Model.Value.QuestionId)
+
+    <div class="form-group">
+        <label class="control-label col-sm-1">
+            Option Text
+        </label>
+        <div class="col-sm-4">
+            @Html.TextBox("Options[" + Model.Key + "].Text", Model.Value.Text, new { @class = "form-control" })
+            @Html.ValidationMessage("Options[" + Model.Key + "].Name")
+        </div>
+        <label class="control-label col-sm-1">
+            Is Answer
+        </label>
+        <div class="checkbox col-sm-1">
+            @Html.CheckBox("Options[" + Model.Key + "].IsAnswer", Model.Value.IsAnswer)
+        </div>
+        
+    </div>
+</div>

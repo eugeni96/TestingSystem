@@ -1,0 +1,24 @@
+﻿@model BLL.Interfacies.Entities.CompletedTestEntities.ShortTestResultEntity
+
+@{
+    ViewBag.Title = "TestResult";
+}
+
+<h2>TestResult</h2>
+<div>
+    @Html.DisplayTextFor(m => m.TestName)
+    
+    <table class="table table-striped">
+        @foreach (var questionResult in Model.QuestionResults)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayTextFor(m => questionResult.Text)
+                </td>
+                <td>
+                    @Html.DisplayTextFor(m => questionResult.IsAnsweredCorrectly)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
