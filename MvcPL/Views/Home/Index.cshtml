@@ -5,28 +5,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<table>
-    
-
-    <tr>
-        <td>
-            <button class="btn, btn-link, btn-lg">
-                @Html.ActionLink("Test list", "TestList", "Test")
-            </button>
-        </td>
-        <td>
-            <button class="btn, btn-link, btn-lg">
-                @Html.ActionLink("Create Test", "Create", "Test")
-            </button>
-        </td>
-        <td>
-            <button class="btn, btn-link, btn-lg">
-                @Html.ActionLink("Add Question", "Create", "Question")
-            </button>
-        </td>
-    </tr>
 
 
-</table>
+<div class="jumbotron col-sm-6 col-sm-offset-3">
+    <h1> Quiz Block </h1>
+    <p> Some description</p>
+    @Html.ActionLink("Pick Test", "TestList", "Test", null, new { @role = "button", @class = "btn btn-primary btn-lg" })
+</div>
+
+<div class="jumbotron col-sm-6 col-sm-offset-3">
+    <h1> Creation Block</h1>
+    <p> Some description</p>
+    @Html.ActionLink("Create Question", "Create", "Question", null, new { @role = "button", @class = "btn btn-primary btn-lg" })
+    @Html.ActionLink("Create Test", "Create", "Test", null, new { @role = "button", @class = "btn btn-primary btn-lg" })
+</div>
+
+<div class="jumbotron col-sm-6 col-sm-offset-3">
+    <h1> Edition Block</h1>
+    <p> Some description</p>   
+    @Html.ActionLink("Pick Question", "QuestionList", "Question", null, new { @role = "button", @class = "btn btn-primary btn-lg" })
+    @Html.ActionLink("Pick Test", "TestList", "Test", null, new { @role = "button", @class = "btn btn-primary btn-lg" })
+
+</div>

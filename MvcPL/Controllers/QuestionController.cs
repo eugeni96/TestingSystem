@@ -30,11 +30,21 @@ namespace MvcPL.Controllers
             return View(questionViewModels);
         }
 
+        public ActionResult QuestionList()
+        {
+            return View(QuestionService.GetAll().Select(m => m.ToViewModel()));
+        }
 
+
+        [Authorize]
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View(QuestionService.GetById(id).ToViewModel());
+            if (IsCurrentUserInRole("Moderator"))
+            {
+                return View(QuestionService.GetById(id).ToViewModel());
+            }
+            return RedirectToNotFoundPage;
         }
 
         [HttpPost]
@@ -44,13 +54,18 @@ namespace MvcPL.Controllers
             return View(question);
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
-            return View(new QuestionViewModel()
+            if (IsCurrentUserInRole("Moderator"))
             {
-                Options = new Dictionary<string, OptionViewModel>()
-            });
+                return View(new QuestionViewModel()
+                {
+                    Options = new Dictionary<string, OptionViewModel>()
+                });
+            }
+            return RedirectToNotFoundPage;
         }
 
         public ActionResult Create(QuestionViewModel question)

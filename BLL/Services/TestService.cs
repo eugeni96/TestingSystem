@@ -45,7 +45,7 @@ namespace BLL.Services
 
         public void Update(TestEntity entity)
         {
-            throw new NotImplementedException();
+            testRepository.Update(entity.ToDalTest());
         }
     }
 }

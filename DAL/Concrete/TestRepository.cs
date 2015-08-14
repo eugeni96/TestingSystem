@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using DAL.Interfacies.DTO;
 using DAL.Interfacies.Repository;
+using DAL.Mappers;
 using ORM;
 
 namespace DAL.Concrete
@@ -92,7 +93,27 @@ namespace DAL.Concrete
 
         public void Update(DalTest entity)
         {
-            throw new NotImplementedException();
+            Test ormTest = entity.ToOrm();
+            Test original = context.Set<Test>().Include(m => m.Questions).Single(m => m.Id == entity.Id);
+            
+            context.Entry(original).CurrentValues.SetValues(entity);
+
+            foreach (Question dalQuestion in original.Questions.ToList())
+            {
+                if (ormTest.Questions.All(s => s.Id != dalQuestion.Id))
+                    original.Questions.Remove(dalQuestion);
+            }
+
+            foreach (Question dalQuestion in ormTest.Questions.ToList())
+            {
+                var question = original.Questions.FirstOrDefault(s => s.Id == dalQuestion.Id);
+                if (question == null)
+                {
+                    var newQuestion = context.Set<Question>().FirstOrDefault(m => m.Id == dalQuestion.Id);
+                    original.Questions.Add(newQuestion);
+                }
+            }
+            context.SaveChanges();
         }
     }
 }

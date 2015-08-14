@@ -33,45 +33,48 @@ namespace MvcPL.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            TestViewModel test = new TestViewModel()
+            if (IsCurrentUserInRole("Moderator"))
             {
-                Questions = new List<QuestionViewModel>()
-            };
-            CreateTestViewModel createEditTestViewModel = new CreateTestViewModel()
-            {
-                Test = test,
-                AllQuestions = QuestionService.GetAll().Select(question => new QuestionPickViewModel()
+                TestViewModel test = new TestViewModel();
+                CreateTestViewModel createEditTestViewModel = new CreateTestViewModel()
                 {
-                    Id = question.Id,
-                    Text = question.Text
-                }).ToList()
-            };
-            return View(createEditTestViewModel);
+                    Test = test,
+                    AllQuestions = QuestionService.GetAll().Select(question => new QuestionPickViewModel()
+                    {
+                        Id = question.Id,
+                        Text = question.Text
+                    }).ToList()
+                };
+                return View(createEditTestViewModel);
+            }
+            return RedirectToNotFoundPage;
         }
 
         [HttpPost]
         public ActionResult Create(CreateTestViewModel testViewModel)
         {
-            testViewModel.Test.Questions = new List<QuestionViewModel>();
-            foreach (var pickViewModel in testViewModel.AllQuestions)
+            if (IsCurrentUserInRole("Moderator"))
             {
-                if (pickViewModel.IsPicked)
+                foreach (var pickViewModel in testViewModel.AllQuestions)
                 {
-                    testViewModel.Test.Questions.Add(new QuestionViewModel()
+                    if (pickViewModel.IsPicked)
                     {
-                        Id = pickViewModel.Id,
-                        Text = pickViewModel.Text,
-                        Options = new Dictionary<string, OptionViewModel>()
-                    });
+                        testViewModel.Test.Questions.Add(new QuestionViewModel()
+                        {
+                            Id = pickViewModel.Id,
+                            Text = pickViewModel.Text,
+                            Options = new Dictionary<string, OptionViewModel>()
+                        });
+                    }
                 }
+                TestService.Create(testViewModel.Test.ToEntity());
+                return RedirectToAction("Index", "Home");
             }
-            TestService.Create(testViewModel.Test.ToEntity());
-            return RedirectToAction("Index","Home");
+            return RedirectToNotFoundPage;
         }
 
         public ActionResult TestList()
         {
-            var tests = TestService.GetAll();
             List<TestViewModel> testViewModels = TestService.GetAll().Select(test => new TestViewModel()
             {
                 Id = test.Id,
@@ -134,5 +137,49 @@ namespace MvcPL.Controllers
             }
             return View(result);
         }
+
+        public ActionResult Edit(int id)
+        {
+            if (IsCurrentUserInRole("Moderator"))
+            {
+                TestViewModel test = TestService.GetTestByKey(id).ToViewModel();
+                CreateTestViewModel createEditTestViewModel = new CreateTestViewModel()
+                {
+                    Test = test,
+                    AllQuestions = QuestionService.GetAll().Select(question => new QuestionPickViewModel()
+                    {
+                        Id = question.Id,
+                        Text = question.Text,
+                        IsPicked = test.Questions.Any(m => m.Id == question.Id)
+                    }).ToList()
+                };
+                return View(createEditTestViewModel);
+            }
+            return RedirectToNotFoundPage;
+        }
+
+        [HttpPost]
+        public ActionResult Edit(CreateTestViewModel testViewModel)
+        {
+            if (IsCurrentUserInRole("Moderator"))
+            {
+                foreach (var pickViewModel in testViewModel.AllQuestions)
+                {
+                    if (pickViewModel.IsPicked)
+                    {
+                        testViewModel.Test.Questions.Add(new QuestionViewModel()
+                        {
+                            Id = pickViewModel.Id,
+                            Text = pickViewModel.Text,
+                            Options = new Dictionary<string, OptionViewModel>()
+                        });
+                    }
+                }
+                TestService.Update(testViewModel.Test.ToEntity());
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToNotFoundPage;
+        }
+
     }
 }

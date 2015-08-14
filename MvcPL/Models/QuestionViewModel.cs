@@ -8,6 +8,10 @@ namespace MvcPL.Models
 {
     public class QuestionViewModel
     {
+        public QuestionViewModel()
+        {
+            Options = new Dictionary<string, OptionViewModel>();
+        }
         public int Id { get; set; }
         public string Text { get; set; }
         public int TestId { get; set; }

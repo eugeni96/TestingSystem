@@ -292,6 +292,8 @@
     <Content Include="Views\Test\Quiz.cshtml" />
     <Content Include="Views\Test\TestResult.cshtml" />
     <Content Include="Views\Test\TestIsFinished.cshtml" />
+    <Content Include="Views\Test\Edit.cshtml" />
+    <Content Include="Views\Question\QuestionList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

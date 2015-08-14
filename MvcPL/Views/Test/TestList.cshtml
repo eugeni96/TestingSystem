@@ -12,12 +12,8 @@
     </head>
     <body>
         
-        <table>
-            <tr>
-
-                <th></th>
-            </tr>
-
+        <table class="table table-striped">
+            
             @foreach (var item in Model)
             {
                 <tr>
@@ -25,7 +21,9 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.ActionLink("Start test", "TestPass", "Test", new { id=item.Id }, null) 
+                        @Html.ActionLink("Start", "TestPass", "Test", new { id=item.Id }, new { @class = "btn btn-primary", @role = "button"}) 
+                        @Html.ActionLink("Edit", "Edit", "Test", new { id = item.Id }, new { @class = "btn btn-primary", @role = "button" })
+                        
                     </td>
                 </tr>
             }

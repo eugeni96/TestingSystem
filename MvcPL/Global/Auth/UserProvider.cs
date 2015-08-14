@@ -1,19 +1,19 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Principal;
-using System.Web.Providers.Entities;
 using BLL.Interface.Services;
 
 namespace MvcPL.Global.Auth
 {
     public class UserProvider : IPrincipal
     {
-        private UserIndentity userIdentity { get; set; }
+        private UserIndentity UserIdentity { get; set; }
         private IUserService UserService { get; set; }
         public UserProvider(string name, IUserService userService)
         {
             UserService = userService;
-            userIdentity = new UserIndentity();
-            userIdentity.Init(name, userService);
+            UserIdentity = new UserIndentity();
+            UserIdentity.Init(name, userService);
         }
 
 
@@ -23,25 +23,24 @@ namespace MvcPL.Global.Auth
         {
             get
             {
-                return userIdentity;
+                return UserIdentity;
             }
         }
 
         public bool IsInRole(string role)
         {
-            if (userIdentity.User == null)
+            if (UserIdentity.User == null)
             {
                 return false;
             }
-            var userRole = UserService.GetRoles(userIdentity.User);
-            return userRole.Any(m => m.Name == role); 
+            return UserIdentity.User.Roles.Any(m => m.Name.Equals(role,StringComparison.OrdinalIgnoreCase));
         }
 
         #endregion
 
         public override string ToString()
         {
-            return userIdentity.Name;
+            return UserIdentity.Name;
         }
 
     }

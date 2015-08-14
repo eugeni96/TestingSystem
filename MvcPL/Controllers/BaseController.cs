@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using System.Web.Providers.Entities;
 using BLL.Interface.Entities;
 using BLL.Interface.Services;
 using MvcPL.Global.Auth;
-using MvcPL.Mappers;
 using Ninject;
 
 namespace MvcPL.Controllers
@@ -28,8 +24,13 @@ namespace MvcPL.Controllers
         {
             get
             {
-                return ((UserIndentity)Auth.CurrentUser.Identity).User;
+                return ((IUserProvider) Auth.CurrentUser.Identity).User;
             }
+        }
+
+        public bool IsCurrentUserInRole(string role)
+        {
+            return ((UserProvider) Auth.CurrentUser).IsInRole(role);
         }
 
         public RedirectResult RedirectToNotFoundPage

@@ -31,17 +31,6 @@ namespace MvcPL.Global.Auth
             return retUser;
         }
 
-        public UserEntity Login(string userName)
-        {
-//            UserEntity retUser = UserService.Users.FirstOrDefault(p => string.Compare(p.Name, userName, true) == 0);
-//            if (retUser != null)
-//            {
-//                CreateCookie(userName);
-//            }
-//            return retUser;
-            throw new NotImplementedException();
-        }
-
         private void CreateCookie(string userName, bool isPersistent = false)
         {
             var ticket = new FormsAuthenticationTicket(

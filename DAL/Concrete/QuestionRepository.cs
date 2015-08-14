@@ -93,24 +93,6 @@ namespace DAL.Concrete
 
         public void Update(DalQuestion entity)
         {
-//            var original = context.Set<Question>().Find(entity.Id);
-//            if (original != null)
-//            {
-//                context.Entry(original).CurrentValues.SetValues(entity.ToOrm());
-//                context.SaveChanges();
-//            }
-
-//            var ormQuestion = entity.ToOrm();
-//            foreach (var option in ormQuestion.Options)
-//            {
-//                context.Set<Option>().Attach(option);
-//                context.Entry(option).State = EntityState.Modified;
-//            }
-//            context.Set<Question>().Attach(ormQuestion);
-//            context.Entry(ormQuestion).State = EntityState.Modified;
-//            context.SaveChanges();
-
-
             Question original = context.Set<Question>()
                                         .Include(x => x.Options)
                                         .Single(c => c.Id == entity.Id);

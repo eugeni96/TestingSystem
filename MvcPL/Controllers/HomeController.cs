@@ -1,11 +1,4 @@
-﻿using System;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
-using System.Linq;
-using System.Web.Mvc;
-using BLL.Interface.Entities;
-using BLL.Interface.Services;
-using MvcPL.Models;
+﻿using System.Web.Mvc;
 
 namespace MvcPL.Controllers
 {
@@ -15,11 +8,7 @@ namespace MvcPL.Controllers
         
         public ActionResult Index()
         {
-            return View(UserService.GetAllUserEntities()
-                .Select(user => new UserViewModel()
-                {
-                    UserName = user.UserName
-                }));
+            return View();
         }
 
         public ActionResult UserLogin()

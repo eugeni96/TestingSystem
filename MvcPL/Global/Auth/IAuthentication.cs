@@ -12,9 +12,7 @@ namespace MvcPL.Global.Auth
         HttpContext HttpContext { get; set; }
 
         UserEntity Login(string login, string password, bool isPersistent);
-
-        UserEntity Login(string login);
-
+        
         void LogOut();
 
         IPrincipal CurrentUser { get; }

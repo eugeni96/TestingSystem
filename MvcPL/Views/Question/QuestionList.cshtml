@@ -1,0 +1,22 @@
+﻿@model System.Collections.Generic.IEnumerable<MvcPL.Models.QuestionViewModel>
+
+@{
+    ViewBag.Title = "Question List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Question List</h2>
+
+<table class="table table-striped">
+    @foreach (var question in Model)
+    {
+        <tr>
+            <td class="col-sm-6">
+                @Html.DisplayFor(modelItem => question.Text, new { @class = "inline"})
+            </td>
+            <td class="">
+                @Html.ActionLink("Edit", "Edit", "Question", new { id = question.Id }, new { @class = "btn btn-primary inline", @role = "button" })        
+            </td>
+        </tr>
+    }
+</table>
